@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<tr class="text-center thead-dark">
+    <th style="width:50%">제목</th>
+    <th>글쓴이</th>
+    <th>작성일시</th>
+</tr>
+
+{% if q_list %}
+    <ul>
+    {% for question in q_list %}
+    <p>
+    <tr class="text-center">
+       
+            <td class="text-left">
+                <a href="{% url 'ddm:qna_content' question.id %}">{{ question.subject }} | </a>
+            </td>
+            <td>{{ question.author.username }} | </td>
+            <td>{{ question.create_date }} | </td>
+        </tr>
+    </p>  
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+<table><a href="{% url 'ddm:qna_question' %}" >질문 등록하기</a></table>
+{% endblock %}
+

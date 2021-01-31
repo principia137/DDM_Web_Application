@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if l_list %}
+    <ul>
+    {% for library in l_list %}
+        <li><a href="{% url 'ddm:lib_content' library.id %}">{{ library.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+<table><a href="{% url 'ddm:lib_upload' %}" >업로드</a></table>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if p_list %}
+    <ul>
+    {% for post in p_list %}
+        <li><a href = "{% url 'ddm:community_content' post.id %}">{{ post.subject }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+<table><a href="{% url 'ddm:community_post' %}" >글쓰기</a></table>
+{% endblock %}

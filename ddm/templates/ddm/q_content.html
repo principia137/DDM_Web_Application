@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ q_content.subject }}</h1>
+
+<tr>
+<div>
+    <div>글쓴이 : {{ q_content.author.username }}</div>
+    <div>작성일시 : {{ q_content.create_date }}</div>
+</div>
+</tr>
+
+
+{% if request.user == q_content.author.username %}
+    <div class="my-3">
+        <a href="{% url 'ddm:qna_modify' q_content.id  %}">수정</a>
+    </div>
+    {% endif %}
+
+
+<br>
+<div>
+    {{ q_content.content }}
+</div>
+<h5>{{ q_content.answer_set.count }}개의 답변이 있습니다.</h5>
+<div>
+    <ul>
+    {% for answer in q_content.answer_set.all %}
+        <li>{{ answer.content }}</li>
+
+
+        <div class="badge badge-light p-2 text-left">
+            <div class="mb-2">계정 : {{ answer.author.username }}</div>
+            <div>작성일시 : {{ answer.create_date }}</div>
+        </div>
+        <br>
+
+    {% endfor %}
+    </ul>
+</div>
+<form action="{% url 'ddm:qna_answer' q_content.id %}" method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+    {% for field in form %}
+        {% if field.errors %}
+        <strong>{{ field.label }}</strong>
+        {{ field.errors }}
+        {% endif %}
+    {% endfor %}
+    </div>
+    {% endif %}
+    <textarea name="content" id="content" rows="15"></textarea>
+    <input type="submit" value="답변등록">
+</form>
+{% endblock %}

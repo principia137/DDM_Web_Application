@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if c_list %}
+    <ul>
+    {% for course in c_list %}
+        <li>{{ course.subject }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>질문이 없습니다.</p>
+{% endif %}
+<table>질문 등록하기</a></table>
+{% endblock %}

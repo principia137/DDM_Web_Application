@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ c_content.subject }}</h1>
+
+<div>
+    {{ c_content.content }}
+</div>
+<h5>{{ post.answer_set.count }}개의 답변이 있습니다.</h5>
+<div>
+    <ul>
+    {% for answer in post.answer_set.all %}
+        <li>{{ answer.content }}</li>
+    {% endfor %}
+    </ul>
+</div>
+<form action="/ddm/자유게시판/answer/{post.id}/" method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+    {% for field in form %}
+        {% if field.errors %}
+        <strong>{{ field.label }}</strong>
+        {{ field.errors }}
+        {% endif %}
+    {% endfor %}
+    </div>
+    {% endif %}
+    <textarea name="content" id="content" rows="15"></textarea>
+    <input type="submit" value="댓글등록">
+    </form>
+    {% endblock %}
